@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API V2 Document</title>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        .content {
+            max-width: 1200px;
+            padding-top: 20px;
+        }
+
+        .api-box {
+            background: #F3F3F3;
+            padding: 15px;
+            border: 1px solid #DFDFDF;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #C0C0C0;
+        }
+
+        td {
+            padding: 5px 10px 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>TÀI LIỆU SỬ DỤNG API V2 GPM-LOGIN</h2>
+        <br>
+        <br>
+        Lấy API URL tại tab Tài liệu API trong GPM-Login. Ví dụ: <b>http://127.0.0.1:19955</b> Luôn phải giữ GPM-Login chạy khi gọi API
+		<img src="img/pic.png" style="max-width: 100%">
+        <br><br><br>
+
+        <!-- Open-->
+        <h3><b>MỞ PROFILE (GET METHOD)</b></h3><br>
+        <div class="open-api">
+            <div class="api-box">
+                <span>http://API_URL<b>/v2/start</b></span>
+            </div>
+            <br>
+            <span>Params</span><br><br>
+            <table>
+                <tr>
+                    <td>profile_id</td>
+                    <td>Bắt buộc</td>
+                    <td>Profile ID muốn mở (lấy trên GPM-LOGIN)</td>
+                </tr>
+                <tr>
+                    <td>remote_debug_port</td>
+                    <td>Không bắt buộc</td>
+                    <td>Fixed debug port để remote qua selenium</td>
+                </tr>
+                <tr>
+                    <td>addination_args</td>
+                    <td>Không bắt buộc</td>
+                    <td>Tham số khởi động thêm cho chrome</td>
+                </tr>
+            </table><br>
+            <span>Response</span><br><br>
+            <div class="api-box">
+                <p>
+                    {
+                    "status": true,
+                    "profile_id": "wm6n5ilgppah8ukqcrmvleyzw1lagq2uq2nlfggfnzwotvvr4y",
+                    "browser_location": "D:\\GPM-Login-app\\gpm_browser\\chrome.exe",
+                    "selenium_remote_debug_address": "127.0.0.1:62561",
+                    "selenium_driver_location": "D:\\GPM-Login-app\\gpmdriver.exe"
+                    }
+                </p>
+            </div><br>
+            <table>
+                <tr>
+                    <td>status</td>
+                    <td>true / false</td>
+                </tr>
+                <tr>
+                    <td>profile_id</td>
+                    <td>Profile ID được chạy (nếu khởi tạo thất bại, trả về null)</td>
+                </tr>
+                <tr>
+                    <td>browser_location</td>
+                    <td>Đường dẫn tới chrome.exe của GPM-Browser</td>
+                </tr>
+                <tr>
+                    <td>selenium_remote_debug_address</td>
+                    <td>Remote debug address để remote selenium</td>
+                </tr>
+                <tr>
+                    <td>selenium_driver_location</td>
+                    <td>Đường dẫn tới gpmdriver.exe</td>
+                </tr>
+            </table><br>
+            <span>Test - Bạn có thể gọi ngay trên trình duyệt</span><br><br>
+            <div class="api-box">
+                <p>
+                    http://127.0.0.1:50615/v2/start?profile_id=wm6n5ilgppah8ukqcrmvleyzw1lagq2uq2nlfggfnzwotvvr4y
+                </p>
+            </div><br>
+
+        </div>
+        <br>
+
+        <!-- Create profile -->
+        <h3><b>TẠO PROFILE (GET METHOD)</b></h3><br>
+        <div class="open-api">
+            <div class="api-box">
+                <span>http://API_URL<b>/v2/create</b></span>
+            </div>
+            <br>
+            <span>Params</span><br><br>
+            <table>
+                <tr>
+                    <td>name</td>
+                    <td>Bắt buộc</td>
+                    <td>Tên profile hiển thị trên GPM-Login</td>
+                </tr>
+                <tr>
+                    <td>proxy</td>
+                    <td>Không bắt buộc</td>
+                    <td>
+                        Proxy có thể rỗng (without proxy)
+                        <br>Dạng IP:Port, IP:Port:User:Pass (đối với Http Proxy)
+                        <br>Dạng socks5://IP:Port, socks5://IP:Port:User:Pass (đối với Socks5 Proxy)
+                    </td>
+                </tr>
+                <tr>
+                    <td>group</td>
+                    <td>Không bắt buộc</td>
+                    <td>Mặc định không nhập sẽ là All</td>
+                </tr>
+                <tr>
+                    <td>canvas</td>
+                    <td>Không bắt buộc</td>
+                    <td>Fake canvas : on hoặc off. Mặc định không nhập sẽ là off</td>
+                </tr>
+                <tr>
+                    <td>font</td>
+                    <td>Không bắt buộc</td>
+                    <td>Fake font : on hoặc off. Mặc định không nhập sẽ là on</td>
+                </tr>
+                <tr>
+                    <td>webrtc</td>
+                    <td>Không bắt buộc</td>
+                    <td>Webrtc : on hoặc off. Mặc định không nhập sẽ là on</td>
+                </tr>
+                <tr>
+                    <td>save_type</td>
+                    <td>Không bắt buộc</td>
+                    <td>local hoặc s3. Mặc định không nhập sẽ là local</td>
+                </tr>
+            </table><br>
+            <span>Response</span><br><br>
+
+            <div class="api-box">
+                <p>
+                    {
+                    "status": true,
+                    "profile_id": "wm6n5ilgppah8ukqcrmvleyzw1lagq2uq2nlfggfnzwotvvr4y"
+                    }
+                </p>
+            </div><br>
+            <table>
+                <tr>
+                    <td>status</td>
+                    <td>true / false</td>
+                </tr>
+                <tr>
+                    <td>profile_id</td>
+                    <td>Profile ID được tạo trên GPM-LOGIN</td>
+                </tr>
+            </table><br>
+            <span>Test - Bạn có thể gọi ngay trên trình duyệt</span><br><br>
+            <div class="api-box">
+                <p>
+                    http://127.0.0.1:50615/v2/create?name=Duy dep zai khoai to&canvas=on&proxy=socks5://127.0.0.1:5001
+                </p>
+            </div><br>
+
+        </div>
+        <br>
+
+        <!-- Update proxy -->
+        <h3><b>UPDATE PROXY (GET METHOD)</b></h3><br>
+        <div class="open-api">
+            <div class="api-box">
+                <span>http://API_URL<b>/v2/update-proxy</b></span>
+            </div>
+            <br>
+            <span>Params</span><br><br>
+            <table>
+                <tr>
+                    <td>id</td>
+                    <td>Bắt buộc</td>
+                    <td>Profile ID</td>
+                </tr>
+                <tr>
+                    <td>proxy</td>
+                    <td>Không bắt buộc</td>
+                    <td>
+                        Proxy có thể rỗng (without proxy)
+                        <br>Dạng IP:Port, IP:Port:User:Pass (đối với Http Proxy)
+                        <br>Dạng socks5://IP:Port, socks5://IP:Port:User:Pass (đối với Socks5 Proxy)
+                    </td>
+                </tr>
+            </table><br>
+            <span>Response</span><br><br>
+
+            <div class="api-box">
+                <p>
+                    True|False
+                </p>
+            </div><br>
+            <span>Test - Bạn có thể gọi ngay trên trình duyệt</span><br><br>
+            <div class="api-box">
+                <p>
+                    http://127.0.0.1:50615/v2/update-proxy?id=fhkisun21hfnass&proxy=socks5://127.0.0.1:5001
+                </p>
+            </div><br>
+
+        </div>
+        <br>
+
+        <!-- Update note -->
+        <h3><b>UPDATE NOTE (GET METHOD)</b></h3><br>
+        <div class="open-api">
+            <div class="api-box">
+                <span>http://API_URL<b>/v2/update-note</b></span>
+            </div>
+            <br>
+            <span>Params</span><br><br>
+            <table>
+                <tr>
+                    <td>id</td>
+                    <td>Bắt buộc</td>
+                    <td>Profile ID</td>
+                </tr>
+                <tr>
+                    <td>note</td>
+                    <td>Bắt buộc</td>
+                    <td>
+                        Nội dung ghi chú
+                    </td>
+                </tr>
+            </table><br>
+            <span>Response</span><br><br>
+
+            <div class="api-box">
+                <p>
+                    True|False
+                </p>
+            </div><br>
+            <span>Test - Bạn có thể gọi ngay trên trình duyệt</span><br><br>
+            <div class="api-box">
+                <p>
+                    http://127.0.0.1:50615/v2/update-proxy?id=fhkisun21hfnass&<span>note=Hello</span><!-- &n nó bị mã hóa nên phải thêm <span> vào -->
+                </p>
+            </div><br>
+
+        </div>
+        <br>
+
+        <!-- List profile -->
+        <h3><b>LẤY DANH SÁCH PROFILES (GET METHOD)</b></h3><br>
+        <div class="open-api">
+            <div class="api-box">
+                <span>http://API_URL<b>/v2/profiles</b></span>
+            </div>
+            <br>
+            <span>Response</span><br><br>
+            <div class="api-box">
+                <p>
+                    [
+                    {
+                    "id": "1234",
+                    "name": "ebay2",
+                    "path": "kGa2j9eWcyhBGKx9AUZ6_24062022",
+                    "created_at": "2022-06-24T08:57:02.0088426"
+                    },
+                    {
+                    "id": "5678",
+                    "name": "ebay_reg_001",
+                    "path": "Gz9oPCn2hxTR2OF8e8WG_24062022",
+                    "created_at": "2022-06-24T08:32:44.1630627"
+                    },
+                    {
+                    "id": "910jq",
+                    "name": "kehuydiet2712it1@yahoo.com",
+                    "path": "nnjBSs7L0VMHvJmt083p_16052022",
+                    "created_at": "2022-05-16T20:43:53.1926214"
+                    }
+                    ]
+                </p>
+            </div><br>
+            <span>Test - Bạn có thể gọi ngay trên trình duyệt</span><br><br>
+            <div class="api-box">
+                <p>
+                    http://127.0.0.1:50615/v2/profiles
+                </p>
+            </div><br>
+
+        </div>
+        <br>
+
+        <!-- Delete profile -->
+        <h3><b>XÓA PROFILE (GET METHOD)</b></h3><br>
+        <div class="open-api">
+            <div class="api-box">
+                <span>http://API_URL<b>/v2/delete</b></span>
+            </div>
+            <br>
+            <span>Params</span><br><br>
+            <table>
+                <tr>
+                    <td>profile_id</td>
+                    <td>Bắt buộc</td>
+                    <td>Profile ID trên GPM-LOGIN</td>
+                </tr>
+                <tr>
+                    <td>mode</td>
+                    <td>Không bắt buộc</td>
+                    <td>1 - Chỉ xóa trên app, 2 - Xóa cả trên app lẫn folder profile (Mặc định: 2)</td>
+                </tr>
+            </table><br>
+            <span>Response</span><br><br>
+
+            <div class="api-box">
+                <p>
+                    Luôn luôn trả về: 'OK'
+                </p>
+            </div><br>
+            <span>Test - Bạn có thể gọi ngay trên trình duyệt</span><br><br>
+            <div class="api-box">
+                <p>
+                    http://127.0.0.1:50615/v2/delete?profile_id=kqhzw5pchra08m8di0n9jbmkwyndmmuqqdc29tr9j1qfgv9pno
+                </p>
+            </div><br>
+
+        </div>
+        <br>
+
+    </div>
+</body>
+</html>
