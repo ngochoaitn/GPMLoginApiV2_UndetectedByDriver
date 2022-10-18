@@ -9,16 +9,19 @@ from selenium.webdriver.chrome.options import Options
 
 from UndetectChromeDriver import UndetectChromeDriver
 
-api = GPMLoginAPI('http://127.0.0.1:62975') # Alert: copy url api on GPM Login App
-profileId = input('Profile Id:')
-api.start(profileId)
-print('Profile stared Enter to exit')
-input()
+if __name__ == '__main__':
+    api = GPMLoginAPI('http://127.0.0.1:15990') # Alert: copy url api on GPM Login App
+    profileId = input('Profile Id: ')
+    startedResult = api.Start(profileId)
+    print('selenium_remote_debug_address = ', startedResult["selenium_remote_debug_address"])
+    print('===============================')
+    print('Profile started. Enter to exit')
+    input()
 
 # AllApiFunction()
 
 def SampleAllApiFunction():
-    api = GPMLoginAPI('http://127.0.0.1:62975') # Alert: copy url api on GPM Login App
+    api = GPMLoginAPI('http://127.0.0.1:15990') # Alert: copy url api on GPM Login App
 
     #  Print list off profiles in GPMLogin -------------------------
     print('PROFILES ----------------------------')

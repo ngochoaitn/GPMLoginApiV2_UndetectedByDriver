@@ -1,6 +1,4 @@
-from tkinter.messagebox import NO
 import requests
-from traitlets import Int
 class GPMLoginAPI(object):
     API_START_PATH = "/v2/start"
     API_CREATE_PATH = "/v2/create"
@@ -24,10 +22,10 @@ class GPMLoginAPI(object):
             return None
 
     
-    def Create(self, name: str, group : str = 'All', proxy: str = '', isNoiseCanvas: bool = False, fakeFont : bool = True, turnOnWebRTC : bool = True, saveType : Int = 1):
+    def Create(self, name: str, group : str = 'All', proxy: str = '', isNoiseCanvas: bool = False, fakeFont : bool = True, turnOnWebRTC : bool = True, saveType : int = 1):
         """
         Create a new profile
-        :param Int saveType: 1 => Local, 2 => Cloud
+        :param int saveType: 1 => Local, 2 => Cloud
         """
         try:
             # Make api url
