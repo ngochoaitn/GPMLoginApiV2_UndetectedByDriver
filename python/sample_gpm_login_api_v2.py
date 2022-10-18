@@ -10,59 +10,68 @@ from selenium.webdriver.chrome.options import Options
 from UndetectChromeDriver import UndetectChromeDriver
 
 api = GPMLoginAPI('http://127.0.0.1:62975') # Alert: copy url api on GPM Login App
+profileId = input('Profile Id:')
+api.start(profileId)
+print('Profile stared Enter to exit')
+input()
 
-#  Print list off profiles in GPMLogin -------------------------
-print('PROFILES ----------------------------')
-profiles = api.GetProfiles()
-if(profiles != None):
-    for profile in profiles:
-        id = profile['id']
-        name = profile['name']
-        print(f"Id: {id} | Name: {name}")
+# AllApiFunction()
 
-print('CREATE PROFILE ------------------')
-createdResult = api.Create("giaiphapmmo.net")
-createdProfileId = None
-if(createdResult != None):
-    status = bool(createdResult['status'])
-    if(status):
-        createdProfileId = str(createdResult['profile_id'])
-print(f"Created profile ID: {createdProfileId}")
+def SampleAllApiFunction():
+    api = GPMLoginAPI('http://127.0.0.1:62975') # Alert: copy url api on GPM Login App
 
-print('UPDATE PROXY------------------')
-api.UpdateProxy(createdProfileId, '')
+    #  Print list off profiles in GPMLogin -------------------------
+    print('PROFILES ----------------------------')
+    profiles = api.GetProfiles()
+    if(profiles != None):
+        for profile in profiles:
+            id = profile['id']
+            name = profile['name']
+            print(f"Id: {id} | Name: {name}")
 
-print('UPDATE NOTE ------------------')
-api.UpdateNote(createdProfileId, 'Profile create by API')
+    print('CREATE PROFILE ------------------')
+    createdResult = api.Create("giaiphapmmo.net")
+    createdProfileId = None
+    if(createdResult != None):
+        status = bool(createdResult['status'])
+        if(status):
+            createdProfileId = str(createdResult['profile_id'])
+    print(f"Created profile ID: {createdProfileId}")
 
-print('START PROFILE ------------------')
-startedResult = api.Start(createdProfileId);#, addinationArgs='--proxy-server="1.2.3.4:55"')
-if(startedResult != None):
-    status = bool(startedResult['status'])
-    if(status):
-        browserLocation = str(startedResult["browser_location"])
-        seleniumRemoteDebugAddress = str(startedResult["selenium_remote_debug_address"])
-        gpmDriverPath = str(startedResult["selenium_driver_location"])
-        # Init selenium
-        options = Options()
-        options.debugger_address = seleniumRemoteDebugAddress
-        options.binary_location = browserLocation
-        options.add_experimental_option("useAutomationExtension", False)
-        options.add_experimental_option("enable-automation")
-        options.add_argument("--disable-blink-features")
-        options.add_argument("--disable-blink-features=AutomationControlled")
+    print('UPDATE PROXY------------------')
+    api.UpdateProxy(createdProfileId, '')
 
-        myService  = service.Service(gpmDriverPath)
-        # driver = UndetectChromeDriver(service = myService, options=options)
-        driver = webdriver.Chrome(service = myService, options=options)
-        driver.GetByGpm("https://fingerprint.com/products/bot-detection/")
-        time.sleep(10)
-        driver.close()
-        driver.quit()
+    print('UPDATE NOTE ------------------')
+    api.UpdateNote(createdProfileId, 'Profile create by API')
 
-print('DELETE PROFILE ------------------')
-api.Delete(createdProfileId)
-print(f"Deleted: {createdProfileId}")
+    print('START PROFILE ------------------')
+    startedResult = api.Start(createdProfileId);#, addinationArgs='--proxy-server="1.2.3.4:55"')
+    if(startedResult != None):
+        status = bool(startedResult['status'])
+        if(status):
+            browserLocation = str(startedResult["browser_location"])
+            seleniumRemoteDebugAddress = str(startedResult["selenium_remote_debug_address"])
+            gpmDriverPath = str(startedResult["selenium_driver_location"])
+            # Init selenium
+            options = Options()
+            options.debugger_address = seleniumRemoteDebugAddress
+            options.binary_location = browserLocation
+            options.add_experimental_option("useAutomationExtension", False)
+            options.add_experimental_option("enable-automation")
+            options.add_argument("--disable-blink-features")
+            options.add_argument("--disable-blink-features=AutomationControlled")
 
-print('ALL DONE, PRESS ENTER TO EXIT')
-input() # pause
+            myService  = service.Service(gpmDriverPath)
+            # driver = UndetectChromeDriver(service = myService, options=options)
+            driver = webdriver.Chrome(service = myService, options=options)
+            driver.GetByGpm("https://fingerprint.com/products/bot-detection/")
+            time.sleep(10)
+            driver.close()
+            driver.quit()
+
+    print('DELETE PROFILE ------------------')
+    api.Delete(createdProfileId)
+    print(f"Deleted: {createdProfileId}")
+
+    print('ALL DONE, PRESS ENTER TO EXIT')
+    input() # pause

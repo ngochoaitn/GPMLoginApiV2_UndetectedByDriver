@@ -13,7 +13,19 @@ namespace GpmLoginApiV2Sample
         static void Main(string[] args)
         {
             GPMLoginAPI api = new GPMLoginAPI("http://127.0.0.1:49806");
+            Console.Write("Profile id: ");
+            string profileId = Console.ReadLine();
+            api.Start(profileId);
+            Console.WriteLine("Profile stared Enter to exit");
+            Console.ReadLine();
 
+            // SampleAllApiFunction();
+        }
+
+        private static void SampleAllApiFunction()
+        {
+            GPMLoginAPI api = new GPMLoginAPI("http://127.0.0.1:49806");
+            
             // Print list off profiles in GPMLogin -------------------------
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("PROFILES ----------------------------");
@@ -54,7 +66,6 @@ namespace GpmLoginApiV2Sample
 
             Console.WriteLine("UPDATE NOTE------------------");
             api.UpdateNote(createdProfileId, "Profile create by API");
-
 
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -104,8 +115,7 @@ namespace GpmLoginApiV2Sample
             Console.ForegroundColor = ConsoleColor.White;
 
             api.Delete(createdProfileId);
-            Console.WriteLine("Deleted : "+createdProfileId + "\n\n");
-
+            Console.WriteLine("Deleted : " + createdProfileId + "\n\n");
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("ALL DONE, PRESS ENTER TO EXIT");
