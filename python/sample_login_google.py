@@ -1,3 +1,4 @@
+from getpass import getpass
 import time
 from GPMLoginAPI import GPMLoginAPI
 from selenium import webdriver
@@ -9,9 +10,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 # Alert: This is test sample, we not support code for it :(
-
 if __name__ == '__main__':
-    api = GPMLoginAPI('http://127.0.0.1:15990') # Alert: copy url api on GPM Login App
+    # password = getpass('Password: ')
+    # print(password)
+
+    # input()
+    api = GPMLoginAPI('http://127.0.0.1:19995') # Alert: copy url api on GPM Login App
     profileId = input('Profile Id: ')
     startedResult = api.Start(profileId)
 
@@ -26,7 +30,7 @@ if __name__ == '__main__':
     driver_path = startedResult["selenium_driver_location"]
     driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
     userName = input('User name: ')
-    password = input('Password: ')
+    password = getpass('Password: ')
     driver.get("https://mail.google.com/")
     time.sleep(3)
     try:

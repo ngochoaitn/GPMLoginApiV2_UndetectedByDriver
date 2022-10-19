@@ -21,7 +21,6 @@ class GPMLoginAPI(object):
             print('error GetProfiles()')
             return None
 
-    
     def Create(self, name: str, group : str = 'All', proxy: str = '', isNoiseCanvas: bool = False, fakeFont : bool = True, turnOnWebRTC : bool = True, saveType : int = 1):
         """
         Create a new profile
@@ -29,7 +28,7 @@ class GPMLoginAPI(object):
         """
         try:
             # Make api url
-            url = f"{self._apiUrl}{self.API_CREATE_PATH}?&group={group}name={name}&proxy={proxy}"
+            url = f"{self._apiUrl}{self.API_CREATE_PATH}?name={name}&group={group}&proxy={proxy}"
             url += f"&canvas={'on' if isNoiseCanvas else 'off'}"
             url += f"&font={'on' if fakeFont else 'off'}"
             url += f"&webrtc={'on' if turnOnWebRTC else 'off'}"
@@ -53,7 +52,7 @@ class GPMLoginAPI(object):
     def UpdateNote(self, profileId: str, note: str):
         try:
             # Make api url
-            url = f"{self._apiUrl}{self.UPDATE_NOTE}?id={profileId}&note={note}"
+            url = f"{self._apiUrl}{self.API_UPDATE_NOTE_PATH}?id={profileId}&note={note}"
             # Call api
             resp = requests.get(url)
             return resp.text().tolower() == "true"

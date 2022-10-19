@@ -11,9 +11,10 @@ namespace GpmLoginApiV2Sample
 {
     internal class Program
     {
+        static string apiUrl = "http://127.0.0.1:19995";
         static void Main(string[] args)
         {
-            GPMLoginAPI api = new GPMLoginAPI("http://127.0.0.1:15990");
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
             Console.Write("Profile id: ");
             string profileId = Console.ReadLine();
             JObject startedResult = api.Start(profileId);
@@ -21,13 +22,14 @@ namespace GpmLoginApiV2Sample
             Console.WriteLine("Profile stared Enter to exit");
             Console.ReadLine();
 
-            // SampleAllApiFunction();
+            //SampleAllApiFunction();
+
             //TestLoginGoogle(); // This is test sample, we not support code for it :(
         }
 
         private static void SampleAllApiFunction()
         {
-            GPMLoginAPI api = new GPMLoginAPI("http://127.0.0.1:49806");
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
             
             // Print list off profiles in GPMLogin -------------------------
             Console.ForegroundColor = ConsoleColor.Green;
@@ -129,7 +131,7 @@ namespace GpmLoginApiV2Sample
         // Alert: This is test sample, we not support code for it :(
         private static void TestLoginGoogle()
         {
-            GPMLoginAPI api = new GPMLoginAPI("http://127.0.0.1:15990");
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
             Console.Write("Profile id: ");
             string profileId = Console.ReadLine();
             JObject startedResult = api.Start(profileId);
@@ -137,7 +139,7 @@ namespace GpmLoginApiV2Sample
             Console.Write("User name: ");
             string userName = Console.ReadLine();
             Console.Write("Password: ");
-            string password = Console.ReadLine();
+            string password = GetPass();// Console.ReadLine();
 
             string browserLocation = Convert.ToString(startedResult["browser_location"]);
             string seleniumRemoteDebugAddress = Convert.ToString(startedResult["selenium_remote_debug_address"]);
@@ -183,6 +185,28 @@ namespace GpmLoginApiV2Sample
 
             Console.WriteLine("Profile stared Enter to exit");
             Console.ReadLine();
+        }
+        private static string GetPass()
+        {
+            var pass = string.Empty;
+            ConsoleKey key;
+            do
+            {
+                var keyInfo = Console.ReadKey(intercept: true);
+                key = keyInfo.Key;
+
+                if (key == ConsoleKey.Backspace && pass.Length > 0)
+                {
+                    Console.Write("\b \b");
+                    pass = pass.Substring(0, pass.Length - 1);
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    Console.Write("*");
+                    pass += keyInfo.KeyChar;
+                }
+            } while (key != ConsoleKey.Enter);
+            return pass;
         }
     }
 }

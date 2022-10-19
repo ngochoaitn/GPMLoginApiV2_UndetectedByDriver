@@ -8,20 +8,10 @@ from selenium.webdriver.chrome import service
 from selenium.webdriver.chrome.options import Options
 
 from UndetectChromeDriver import UndetectChromeDriver
-
-if __name__ == '__main__':
-    api = GPMLoginAPI('http://127.0.0.1:15990') # Alert: copy url api on GPM Login App
-    profileId = input('Profile Id: ')
-    startedResult = api.Start(profileId)
-    print('selenium_remote_debug_address = ', startedResult["selenium_remote_debug_address"])
-    print('===============================')
-    print('Profile started. Enter to exit')
-    input()
-
-# AllApiFunction()
+apiUrl = 'http://127.0.0.1:19995'
 
 def SampleAllApiFunction():
-    api = GPMLoginAPI('http://127.0.0.1:15990') # Alert: copy url api on GPM Login App
+    api = GPMLoginAPI(apiUrl) # Alert: copy url api on GPM Login App
 
     #  Print list off profiles in GPMLogin -------------------------
     print('PROFILES ----------------------------')
@@ -49,26 +39,29 @@ def SampleAllApiFunction():
 
     print('START PROFILE ------------------')
     startedResult = api.Start(createdProfileId);#, addinationArgs='--proxy-server="1.2.3.4:55"')
+    time.sleep(3)
     if(startedResult != None):
         status = bool(startedResult['status'])
         if(status):
             browserLocation = str(startedResult["browser_location"])
             seleniumRemoteDebugAddress = str(startedResult["selenium_remote_debug_address"])
             gpmDriverPath = str(startedResult["selenium_driver_location"])
+            print('gpmDriverPath = ', gpmDriverPath, 'seleniumRemoteDebugAddress = ', seleniumRemoteDebugAddress)
             # Init selenium
             options = Options()
             options.debugger_address = seleniumRemoteDebugAddress
             options.binary_location = browserLocation
-            options.add_experimental_option("useAutomationExtension", False)
-            options.add_experimental_option("enable-automation")
+            # options.add_experimental_option("useAutomationExtension", False)
+            # options.add_experimental_option("enable-automation", False)
             options.add_argument("--disable-blink-features")
             options.add_argument("--disable-blink-features=AutomationControlled")
 
             myService  = service.Service(gpmDriverPath)
             # driver = UndetectChromeDriver(service = myService, options=options)
             driver = webdriver.Chrome(service = myService, options=options)
-            driver.GetByGpm("https://fingerprint.com/products/bot-detection/")
+            driver.get("https://fingerprint.com/products/bot-detection/")
             time.sleep(10)
+            input('Enter to next...')
             driver.close()
             driver.quit()
 
@@ -78,3 +71,14 @@ def SampleAllApiFunction():
 
     print('ALL DONE, PRESS ENTER TO EXIT')
     input() # pause
+
+if __name__ == '__main__':
+    # api = GPMLoginAPI(apiUrl) # Alert: copy url api on GPM Login App
+    # profileId = input('Profile Id: ')
+    # startedResult = api.Start(profileId)
+    # print('selenium_remote_debug_address = ', startedResult["selenium_remote_debug_address"])
+    # print('===============================')
+    # print('Profile started. Enter to exit')
+    # input()
+
+    SampleAllApiFunction()
