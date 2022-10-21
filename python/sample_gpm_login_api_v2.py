@@ -38,7 +38,7 @@ def SampleAllApiFunction():
     api.UpdateNote(createdProfileId, 'Profile create by API')
 
     print('START PROFILE ------------------')
-    startedResult = api.Start(createdProfileId);#, addinationArgs='--proxy-server="1.2.3.4:55"')
+    startedResult = api.Start(createdProfileId)
     time.sleep(3)
     if(startedResult != None):
         status = bool(startedResult['status'])
