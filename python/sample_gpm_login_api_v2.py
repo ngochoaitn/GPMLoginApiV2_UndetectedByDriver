@@ -73,12 +73,12 @@ def SampleAllApiFunction():
     input() # pause
 
 if __name__ == '__main__':
-    # api = GPMLoginAPI(apiUrl) # Alert: copy url api on GPM Login App
-    # profileId = input('Profile Id: ')
-    # startedResult = api.Start(profileId)
-    # print('selenium_remote_debug_address = ', startedResult["selenium_remote_debug_address"])
-    # print('===============================')
-    # print('Profile started. Enter to exit')
-    # input()
+    api = GPMLoginAPI(apiUrl) # Alert: copy url api on GPM Login App
+    profileId = input('Profile Id: ')
+    startedResult = api.Start(profileId)
+    print('selenium_remote_debug_address = ', startedResult["selenium_remote_debug_address"])
+    print('===============================')
+    print('Profile started. Enter to exit')
+    input()
 
-    SampleAllApiFunction()
+    # SampleAllApiFunction()
