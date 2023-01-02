@@ -1,5 +1,7 @@
 from getpass import getpass
 import time
+import sys
+sys.path.append("..")
 from GPMLoginAPI import GPMLoginAPI
 from selenium import webdriver
 # python3 -m pip install --upgrade pip
@@ -8,13 +10,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome import service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
 
 # Alert: This is test sample, we not support code for it :(
 if __name__ == '__main__':
-    # password = getpass('Password: ')
-    # print(password)
-
-    # input()
     api = GPMLoginAPI('http://127.0.0.1:19995') # Alert: copy url api on GPM Login App
     profileId = input('Profile Id: ')
     startedResult = api.Start(profileId)
@@ -28,7 +27,11 @@ if __name__ == '__main__':
     chrome_options.arguments.extend(["--no-default-browser-check", "--no-first-run"])
 
     driver_path = startedResult["selenium_driver_location"]
-    driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+    print('driver_path: ', driver_path)
+    ser = Service(driver_path)
+    # driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+    driver = webdriver.Chrome(service=ser, options=chrome_options)
+    # input()
     userName = input('User name: ')
     password = getpass('Password: ')
     driver.get("https://mail.google.com/")

@@ -21,7 +21,7 @@ class GPMLoginAPI(object):
             print('error GetProfiles()')
             return None
 
-    def Create(self, name: str, group : str = 'All', proxy: str = '', isNoiseCanvas: bool = False, fakeFont : bool = True, turnOnWebRTC : bool = True, saveType : int = 1):
+    def Create(self, name: str, group : str = 'All', proxy: str = '', isNoiseCanvas: bool = False, fakeFont : bool = True, turnOnWebRTC : bool = True): #, saveType : int = 1):
         """
         Create a new profile
         :param int saveType: 1 => Local, 2 => Cloud
@@ -32,7 +32,7 @@ class GPMLoginAPI(object):
             url += f"&canvas={'on' if isNoiseCanvas else 'off'}"
             url += f"&font={'on' if fakeFont else 'off'}"
             url += f"&webrtc={'on' if turnOnWebRTC else 'off'}"
-            url += f"&save_type={saveType}"
+            # url += f"&save_type={saveType}"
             # Call api
             resp = requests.get(url)
             return resp.json()

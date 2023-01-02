@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Libs\GPMLoginAPI.cs" />
     <Compile Include="Libs\UndectedChromeDriver.cs" />
+    <Compile Include="GPMLoginApi_MoreSample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

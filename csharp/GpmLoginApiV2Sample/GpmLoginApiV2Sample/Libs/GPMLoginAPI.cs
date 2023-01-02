@@ -62,14 +62,14 @@ namespace GpmLoginApiV2Sample.Libs
         /// <param name="turnOnWebRTC">Default on</param>
         /// <param name="saveType">1 => Local, 2 => Cloud</param>
         /// <returns>View in API document</returns>
-        public JObject Create(string name, string group="All", string proxy = "", bool isNoiseCanvas = false, bool fakeFont = true, bool turnOnWebRTC = true, int saveType = 1)
+        public JObject Create(string name, string group="All", string proxy = "", bool isNoiseCanvas = false, bool fakeFont = true, bool turnOnWebRTC = true)//, int saveType = 1)
         {
             // Make api url
             string url = _apiUrl + API_CREATE_PATH + $"?name={name}&group={group}&proxy={proxy}";
             url += $"&canvas={(isNoiseCanvas ? "on" : "off")}";
             url += $"&font={(fakeFont ? "on" : "off")}";
             url += $"&webrtc={(turnOnWebRTC ? "on" : "off")}";
-            url += $"&save_type={saveType}";
+            //url += $"&save_type={saveType}";
 
             // Call api
             string resp = httpRequest(url);
