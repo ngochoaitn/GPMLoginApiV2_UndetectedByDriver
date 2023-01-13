@@ -36,7 +36,8 @@ class GPMLoginAPI(object):
             # Call api
             resp = requests.get(url)
             return resp.json()
-        except:
+        except Exception as e:
+            print(e)
             return None
 
     def UpdateProxy(self, profileId: str, proxy: str = ''):
@@ -45,8 +46,9 @@ class GPMLoginAPI(object):
             url = f"{self._apiUrl}{self.API_UPDATE_PROXY_PATH}?id={profileId}&proxy={proxy}"
             # Call api
             resp = requests.get(url)
-            return resp.text().tolower() == "true"
-        except:
+            return resp.text.lower() == "true"
+        except Exception as e:
+            print(e)
             return False
 
     def UpdateNote(self, profileId: str, note: str):
@@ -55,8 +57,9 @@ class GPMLoginAPI(object):
             url = f"{self._apiUrl}{self.API_UPDATE_NOTE_PATH}?id={profileId}&note={note}"
             # Call api
             resp = requests.get(url)
-            return resp.text().tolower() == "true"
-        except:
+            return resp.text.lower() == "true"
+        except Exception as e:
+            print(e)
             return False
 
     def Start(self, profileId: str, remoteDebugPort: int = 0, addinationArgs: str = ''):
@@ -71,7 +74,8 @@ class GPMLoginAPI(object):
             # call api
             resp = requests.get(url)
             return resp.json()
-        except:
+        except Exception as e:
+            print(e)
             return None
     
     def Delete(self, profileId: str, mode: int = 2):
