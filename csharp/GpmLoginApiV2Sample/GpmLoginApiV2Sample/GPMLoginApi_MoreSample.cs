@@ -90,7 +90,11 @@ namespace GpmLoginApiV2Sample
                     driver.Navigate().GoToUrl("https://fingerprint.com/products/bot-detection/");
 
                     // Delay 10s, close and delete profile
-                    Thread.Sleep(10000);
+                    //Thread.Sleep(10000);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("PRESS ENTER TO CLOSE BROWSER");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ReadLine();
 
                     driver.Close();
                     driver.Quit();
@@ -101,6 +105,9 @@ namespace GpmLoginApiV2Sample
             // Delete profile ----------------------------------------
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("DELETE PROFILE ------------------");
+            Console.WriteLine("PRESS ENTER TO DELETE PROFILE");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.White;
 
             api.Delete(createdProfileId);
@@ -191,6 +198,34 @@ namespace GpmLoginApiV2Sample
                 }
             } while (key != ConsoleKey.Enter);
             return pass;
+        }
+
+        public static void GetUrl(string url)
+        {
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
+            Console.Write("Profile id: ");
+            string profileId = Console.ReadLine();
+            JObject startedResult = api.Start(profileId);
+
+            //string browserLocation = Convert.ToString(startedResult["browser_location"]);
+            string seleniumRemoteDebugAddress = Convert.ToString(startedResult["selenium_remote_debug_address"]);
+            string gpmDriverPath = Convert.ToString(startedResult["selenium_driver_location"]);
+
+            // Init selenium
+            FileInfo gpmDriverFileInfo = new FileInfo(gpmDriverPath);
+
+            ChromeDriverService service = ChromeDriverService.CreateDefaultService(gpmDriverFileInfo.DirectoryName, gpmDriverFileInfo.Name);
+            ChromeOptions options = new ChromeOptions();
+            //options.BinaryLocation = browserLocation;
+            options.DebuggerAddress = seleniumRemoteDebugAddress;
+            //options.AddAdditionalOption("useAutomationExtension", false);
+            //options.AddExcludedArgument("enable-automation");
+            options.AddArgument("--disable-blink-features");
+            options.AddArgument("--disable-blink-features=AutomationControlled");
+
+            ChromeDriver driver = new ChromeDriver(service, options);
+
+            driver.Navigate().GoToUrl(url);
         }
     }
 }

@@ -20,6 +20,9 @@ namespace GpmLoginApiV2Sample
             // GPMLoginApi_MoreSample.SampleAllApiFunction();
 
             //GPMLoginApi_MoreSample.TestLoginGoogle(); // This is test sample, we not support code for it :(
+
+            //GPMLoginApi_MoreSample.GetUrl("https://fingerprint.com/products/bot-detection/");
+            //Console.ReadLine();
         }
     }
 }
