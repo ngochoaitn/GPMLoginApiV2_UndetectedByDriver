@@ -1,6 +1,7 @@
 import requests
 class GPMLoginAPI(object):
     API_START_PATH = "/v2/start"
+    API_STOP_PATH = "/v2/stop"
     API_CREATE_PATH = "/v2/create"
     API_UPDATE_PROXY_PATH = "/v2/update-proxy"
     API_UPDATE_NOTE_PATH = "/v2/update-note"
@@ -77,7 +78,11 @@ class GPMLoginAPI(object):
         except Exception as e:
             print(e)
             return None
-    
+
+    def Stop(self, profileId: str):
+        url = f"{self._apiUrl}{self.API_STOP_PATH}?profile_id={profileId}"
+        requests.get(url)
+
     def Delete(self, profileId: str, mode: int = 2):
         url = f"{self._apiUrl}{self.API_DELETE_PATH}?profile_id={profileId}&mode={mode}"
         requests.get(url)

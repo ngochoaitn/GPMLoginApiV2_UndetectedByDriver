@@ -27,6 +27,7 @@ if __name__ == '__main__':
     chrome_options.arguments.extend(["--no-default-browser-check", "--no-first-run"])
 
     driver_path = startedResult["selenium_driver_location"]
+    # driver_path = "C:\\Users\\LEGION\\AppData\\Local\\Programs\\GPMLogin\\gpm_browser\\gpm_browser_chromium_core_107\\gpmdriver.exe"
     print('driver_path: ', driver_path)
     ser = Service(driver_path)
     # driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
@@ -51,7 +52,7 @@ if __name__ == '__main__':
 
     time.sleep(2)
 
-    txtPasswordElement = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input")
+    txtPasswordElement = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input")
     txtPasswordElement.send_keys(password)
 
     btnNext = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button")

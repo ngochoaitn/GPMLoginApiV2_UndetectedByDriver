@@ -15,6 +15,7 @@ namespace GpmLoginApiV2Sample.Libs
         private string _apiUrl;
 
         private const string API_START_PATH = "/v2/start";
+        private const string API_STOP_PATH = "/v2/stop";
         private const string API_CREATE_PATH = "/v2/create";
         private const string API_UPDATE_PROXY_PATH = "/v2/update-proxy";
         private const string API_UPDATE_NOTE_PATH = "/v2/update-note";
@@ -49,6 +50,12 @@ namespace GpmLoginApiV2Sample.Libs
             // Call api
             string resp = httpRequest(url);
             return resp != null ? JObject.Parse(resp) : null;
+        }
+
+        public void Stop(string profileId)
+        {
+            string url = _apiUrl + API_STOP_PATH + $"?profile_id={profileId}";
+            httpRequest(url);
         }
 
         /// <summary>

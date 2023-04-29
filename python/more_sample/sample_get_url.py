@@ -31,6 +31,15 @@ if __name__ == '__main__':
     ser = Service(driver_path)
     driver = webdriver.Chrome(service=ser, options=chrome_options)
     driver.get("https://fingerprint.com/products/bot-detection/")
+    # driver.get("https://dash.cloudflare.com/login")
+
+    # driver.get("https://www.redbubble.com/studio/dashboard")
+    # try:
+    #     btnLogin = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div[2]/div/div/div/div/div/div[2]')
+    #     btnLogin.click()
+    #     time.sleep(2)
+    # except:
+    #     print('Not found btn login')
 
     input('Enter to close')
 
