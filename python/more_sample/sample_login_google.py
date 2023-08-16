@@ -52,10 +52,10 @@ if __name__ == '__main__':
 
     time.sleep(2)
 
-    txtPasswordElement = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input")
+    txtPasswordElement = driver.find_element(By.XPATH, "//input[@type='password']")
     txtPasswordElement.send_keys(password)
 
-    btnNext = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button")
+    btnNext = driver.find_element(By.XPATH, "//*[text()='Next']")
     btnNext.click()
 
     print('Enter for quit')
