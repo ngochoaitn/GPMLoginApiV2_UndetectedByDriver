@@ -66,7 +66,8 @@ async function captureScreenshot(webSocketDebuggerUrl) {
 
         await page.setViewport({ width: 1440, height: 1080 });
 
-        await page.goto("https://giaiphapmmo.net");
+        // await page.goto("https://giaiphapmmo.net");
+        await page.goto("https://pro.nansen.ai/auth/signup");
 
         await page.screenshot({ path: `screenshots/profile.jpeg` });
     } catch (err) {
@@ -77,7 +78,7 @@ async function captureScreenshot(webSocketDebuggerUrl) {
 }
 
 async function main(){
-    let idProfile = '3b9e6faf-72f3-4382-8a76-32688d03e0ff';
+    let idProfile = 'eb244040-ba1b-4906-a449-522364ee379d';
     // Bước 1: Khởi động profile
     let startData = await startProfile(idProfile);
 
@@ -88,7 +89,7 @@ async function main(){
     captureScreenshot(connectionInfo.webSocketDebuggerUrl);
 
     // Đóng profile
-    stopProfile(idProfile);
+    // stopProfile(idProfile);
 }
 
 main()

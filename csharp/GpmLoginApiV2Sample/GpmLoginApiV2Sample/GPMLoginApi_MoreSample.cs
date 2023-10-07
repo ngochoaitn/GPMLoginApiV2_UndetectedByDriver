@@ -177,6 +177,8 @@ namespace GpmLoginApiV2Sample
             Console.WriteLine("Profile stared Enter to exit");
             Console.ReadLine();
         }
+        
+        // read password from console
         private static string GetPass()
         {
             var pass = string.Empty;
@@ -226,6 +228,31 @@ namespace GpmLoginApiV2Sample
             ChromeDriver driver = new ChromeDriver(service, options);
 
             driver.Navigate().GoToUrl(url);
+        }
+
+        public static void RunJS()
+        {
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
+            Console.Write("Profile id: ");
+            string profileId = Console.ReadLine();
+            JObject startedResult = api.Start(profileId);
+
+            //string browserLocation = Convert.ToString(startedResult["browser_location"]);
+            string seleniumRemoteDebugAddress = Convert.ToString(startedResult["selenium_remote_debug_address"]);
+            string gpmDriverPath = Convert.ToString(startedResult["selenium_driver_location"]);
+
+            // Init selenium
+            FileInfo gpmDriverFileInfo = new FileInfo(gpmDriverPath);
+            ChromeDriverService service = ChromeDriverService.CreateDefaultService(gpmDriverFileInfo.DirectoryName, gpmDriverFileInfo.Name);
+            ChromeOptions options = new ChromeOptions();
+            options.DebuggerAddress = seleniumRemoteDebugAddress;
+            options.AddArgument("--disable-blink-features");
+            options.AddArgument("--disable-blink-features=AutomationControlled");
+
+            ChromeDriver driver = new ChromeDriver(service, options);
+
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript("window.open('https://google.com');");
         }
     }
 }

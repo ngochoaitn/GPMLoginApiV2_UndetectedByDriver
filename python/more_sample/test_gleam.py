@@ -45,8 +45,10 @@ if __name__ == '__main__':
 
     driver = webdriver.Chrome(service=ser, options=chrome_options)
 
-    driver.get("https://gleam.io/")
+    # driver.get("https://gleam.io/")
+    driver.get("https://pro.nansen.ai/auth/signup")
     time.sleep(5)
+    input('Enter to continue')
 
     try:
         btnLogin = driver.find_element(By.XPATH, "//a[contains(@href, '/login')]")
