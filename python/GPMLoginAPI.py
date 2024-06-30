@@ -1,4 +1,6 @@
 import requests
+# python3 -m pip install requests
+# python3 -m pip install selenium
 class GPMLoginAPI(object):
     API_START_PATH = "/v2/start"
     API_STOP_PATH = "/v2/stop"

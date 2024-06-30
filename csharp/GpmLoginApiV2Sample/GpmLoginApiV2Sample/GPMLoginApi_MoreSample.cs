@@ -2,10 +2,15 @@
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace GpmLoginApiV2Sample
 {
@@ -230,6 +235,35 @@ namespace GpmLoginApiV2Sample
             driver.Navigate().GoToUrl(url);
         }
 
+        public static void GetUrlFirefox(string url)
+        {
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
+            Console.Write("Profile id: ");
+            string profileId = Console.ReadLine();
+            JObject startedResult = api.Start(profileId);
+
+            //string browserLocation = Convert.ToString(startedResult["browser_location"]);
+            string seleniumRemoteDebugAddress = Convert.ToString(startedResult["selenium_remote_debug_address"]);
+            string gpmDriverPath = Convert.ToString(startedResult["selenium_driver_location"]);
+            string browserLocation = Convert.ToString(startedResult["browser_location"]);
+            int remotePort = Convert.ToInt32(seleniumRemoteDebugAddress.Split(':')[1]);
+            // Init selenium
+            FileInfo gpmDriverFileInfo = new FileInfo(gpmDriverPath);
+
+            FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(gpmDriverFileInfo.DirectoryName, gpmDriverFileInfo.Name);
+            service.BrowserCommunicationPort = remotePort;
+            service.ConnectToRunningBrowser = true;
+            service.HideCommandPromptWindow = false;
+            service.SuppressInitialDiagnosticInformation = true;
+            service.Start();
+
+            FirefoxOptions options = new FirefoxOptions();
+            //options.AddArgument($"--marionette-port {remotePort}");
+            FirefoxDriver driver = new FirefoxDriver(service, options, TimeSpan.FromMinutes(5));
+
+            driver.Navigate().GoToUrl(url);
+        }
+
         public static void RunJS()
         {
             GPMLoginAPI api = new GPMLoginAPI(apiUrl);
@@ -253,6 +287,53 @@ namespace GpmLoginApiV2Sample
 
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
             jsExecutor.ExecuteScript("window.open('https://google.com');");
+        }
+
+        public static void FakeClick()
+        {
+            GPMLoginAPI api = new GPMLoginAPI(apiUrl);
+            Console.Write("Profile id: ");
+            string profileId = Console.ReadLine();
+            JObject startedResult = api.Start(profileId);
+
+            //string browserLocation = Convert.ToString(startedResult["browser_location"]);
+            string seleniumRemoteDebugAddress = Convert.ToString(startedResult["selenium_remote_debug_address"]);
+            string gpmDriverPath = Convert.ToString(startedResult["selenium_driver_location"]);
+
+            // Init selenium
+            FileInfo gpmDriverFileInfo = new FileInfo(gpmDriverPath);
+            ChromeDriverService service = ChromeDriverService.CreateDefaultService(gpmDriverFileInfo.DirectoryName, gpmDriverFileInfo.Name);
+            ChromeOptions options = new ChromeOptions();
+            options.DebuggerAddress = seleniumRemoteDebugAddress;
+            options.AddArgument("--disable-blink-features");
+            options.AddArgument("--disable-blink-features=AutomationControlled");
+
+            ChromeDriver driver = new ChromeDriver(service, options);
+
+            driver.Navigate().GoToUrl("https://dantri.com.vn/");
+            Console.ReadLine();
+
+            Actions builder = new Actions(driver);
+            var element = driver.FindElement(By.TagName("nav"));
+            //builder.MoveByOffset(10, 10).Click().Build().Perform();
+            for (int i = 0; i <= 100; i++)
+            {
+                try
+                {
+                    int x = element.Location.X + i * 100;
+                    int y = element.Location.Y;
+                    builder.MoveByOffset(x, y).Build().Perform();
+                    Thread.Sleep(20);
+                    builder.MoveByOffset(-x, -y).Build().Perform();
+                    Console.WriteLine($"Move {x}, {y}");
+                }
+                catch { }
+            }
+
+            Console.ReadLine();
+
+            driver.Close();
+            driver.Quit();
         }
     }
 }

@@ -17,13 +17,17 @@ namespace GpmLoginApiV2Sample
             Console.WriteLine("Profile stared Enter to exit");
             Console.ReadLine();
 
-            // GPMLoginApi_MoreSample.SampleAllApiFunction();
+            //GPMLoginApi_MoreSample.SampleAllApiFunction();
 
             //GPMLoginApi_MoreSample.TestLoginGoogle(); // This is test sample, we not support code for it :(
 
             //GPMLoginApi_MoreSample.GetUrl("https://fingerprint.com/products/bot-detection/");
+            //GPMLoginApi_MoreSample.GetUrlFirefox("https://fingerprint.com/products/bot-detection/");
 
             //GPMLoginApi_MoreSample.RunJS(); // This is test sample, we not support code for it :(
+
+            //GPMLoginApi_MoreSample.FakeClick();
+
             //Console.ReadLine();
         }
     }

@@ -31,16 +31,17 @@ if __name__ == '__main__':
     ser = Service(driver_path)
     driver = webdriver.Chrome(service=ser, options=chrome_options)
 
-    driver.get("https://gleam.io/")
+    # driver.get("https://gleam.io/")
     # driver.get("https://nowsecure.nl")
     # driver.get("https://fingerprint.com/products/bot-detection/")
     # driver.get("https://hmaker.github.io/selenium-detector/")
     # driver.get("https://dash.cloudflare.com/login")
-    # driver.get('https://pro.nansen.ai/auth/signup')
+
+    driver.get('https://pro.nansen.ai/auth/signup')
 
     # driver.get("https://www.redbubble.com/studio/dashboard")
     # try:
-    #     btnLogin = driver.find_element(By.XPATH, '/html/body/div[1]/div/div[1]/div[2]/div/div/div/div/div/div[2]')
+    #     btnLogin = driver.find_element(By.XPATH, '//*[@id="RB_React_Component_LoginLink_4"]/a')
     #     btnLogin.click()
     #     time.sleep(2)
     # except:
